@@ -2,5 +2,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+.Rhistory
 data/raw/ml-100k.zip
 results/*.png

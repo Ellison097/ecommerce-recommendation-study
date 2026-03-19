@@ -1,5 +1,5 @@
 dataset:
-  name: movielens_100k
+  name: online_retail
   raw_dir: data/raw
   processed_dir: data/processed
   min_user_interactions: 5
@@ -7,7 +7,7 @@ dataset:
   test_ratio: 0.2
   val_ratio: 0.1
   seed: 42
-  item_text_field: title
+  item_text_field: description
 
 training:
   top_k: 10
