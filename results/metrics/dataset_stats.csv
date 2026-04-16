@@ -1,0 +1,2 @@
+n_users,n_items,n_interactions,n_train,n_val,n_test,density,avg_items_per_user,avg_users_per_item
+22363,12101,198502,153776,22363,22363,0.0007335227064174272,8.876358270357287,16.403768283612923

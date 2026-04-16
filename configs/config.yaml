@@ -1,0 +1,54 @@
+project:
+  name: "A Systematic Study of Recommendation Algorithms for E-commerce Platforms"
+  author: "Licheng Guo"
+  affiliation: "University of Pennsylvania – DATS 5990"
+  seed: 42
+
+data:
+  category: "beauty"
+  data_dir: "data/ratings"
+  min_user: 5
+  min_item: 5
+  max_seq_len: 50
+
+models:
+  embed_dim: 64
+  lr: 0.001
+  weight_decay: 0.00001
+  batch_size: 512
+  epochs: 30
+  patience: 5
+  n_neg_train: 4
+  n_neg_eval: 99
+
+  itemknn:
+    k: 200
+
+  bpr_mf:
+    reg: 0.0001
+
+  ncf:
+    mlp_layers: [128, 64, 32]
+    dropout: 0.2
+
+  lightgcn:
+    n_layers: 3
+
+  multivae:
+    hidden_dims: [600, 200]
+    dropout: 0.5
+    beta: 0.2
+    anneal_steps: 2000
+
+  sasrec:
+    n_heads: 2
+    n_blocks: 2
+    dropout: 0.2
+
+evaluation:
+  k_values: [5, 10, 20]
+
+results:
+  output_dir: "results"
+  figures_dir: "results/figures"
+  metrics_dir: "results/metrics"

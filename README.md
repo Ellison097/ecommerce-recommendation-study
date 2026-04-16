@@ -1,73 +1,58 @@
-# DATS5990 Recommender Systems Project
+# A Systematic Study of Recommendation Algorithms for E-commerce Platforms
 
-This project implements a reproducible recommendation-system pipeline aligned with the proposal **"A Systematic Study of Recommendation Algorithms for E-commerce Platforms"**.
+**DATS 5990 – Spring 2026 | University of Pennsylvania**  
+**Author:** Licheng Guo
 
-## What is included
+**Code repository:** [https://github.com/Ellison097/ecommerce-recommendation-study](https://github.com/Ellison097/ecommerce-recommendation-study)
 
-### Phase I – Baseline Modeling
-- Popularity-based recommendation
-- User-based Collaborative Filtering
-- Item-based Collaborative Filtering
-- Matrix Factorization (Truncated SVD)
+## Overview
 
-### Phase II – Advanced Modeling
-- Neural Collaborative Filtering (PyTorch)
+A systematic comparison of **eight recommendation algorithms** across five paradigms on a **public 5-core implicit-feedback benchmark** (product-review interactions, single category).
 
-### Phase III – Hybrid + Fairness-aware Optimization
-- Hybrid recommender combining matrix factorization and TF-IDF content similarity
-- Diversity/fairness-aware re-ranking for long-tail exposure balancing
-
-### Evaluation Metrics
-- Precision@K
-- Recall@K
-- NDCG@K
-- MAP@K
-- Coverage
-- Intra-list Diversity
-- Fairness Gap (head vs long-tail exposure)
-
-## Dataset
-By default, the pipeline downloads **MovieLens 100K** automatically. It is used as a proxy benchmark dataset so the project is immediately runnable and reproducible. You can later replace it with a real e-commerce interaction dataset.
+| # | Model | Paradigm | Reference |
+|---|-------|----------|-----------|
+| 1 | Popularity | Heuristic baseline | — |
+| 2 | ItemKNN | Neighbourhood CF | Sarwar et al. 2001 |
+| 3 | BPR-MF | Matrix Factorisation | Rendle et al. UAI 2009 |
+| 4 | NeuMF | Neural CF | He et al. WWW 2017 |
+| 5 | LightGCN | Graph Neural Network | He et al. SIGIR 2020 |
+| 6 | Multi-VAE | Variational Autoencoder | Liang et al. WWW 2018 |
+| 7 | SASRec | Transformer / Sequential | Kang & McAuley ICDM 2018 |
+| 8 | Ensemble | Weighted Blending | — |
 
 ## Quick Start
 
 ```bash
-cd recommender_project
-python3 -m venv .venv
-source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python scripts/run_experiment.py
+python run_experiment.py
 ```
 
-Results are saved to:
-
-- `results/metrics.csv`
-
-## Suggested report framing
-If you use this for your independent study write-up, position MovieLens as a **public benchmark for offline experimentation**, then discuss how the framework transfers to e-commerce scenarios involving sparse interactions, cold start, popularity bias, and fairness constraints.
+The data loader downloads cached benchmark ratings when missing, or falls back to synthetic data if offline.
 
 ## Project Structure
 
-```text
-recommender_project/
-  configs/default.yaml
-  data/
-  results/
-  scripts/run_experiment.py
-  src/recommender/
-    data/
-    evaluation/
-    models/
-    utils/
+```
+├── configs/config.yaml          # Hyper-parameters
+├── data/ratings/                # Cached ratings CSV (or auto-download)
+├── src/
+│   ├── data_loader.py
+│   ├── evaluator.py
+│   ├── visualizer.py
+│   └── models/                  # Eight models + ensemble
+├── run_experiment.py
+└── results/
+    ├── figures/
+    └── metrics/
 ```
 
-## Next extensions you can add
-- Wide & Deep model
-- GRU4Rec / Transformer sequential recommendation
-- Hyperparameter search
-- Real e-commerce metadata and user features
-- Online metric simulation (CTR / conversion proxy)
+## Evaluation Protocol
 
-## Notes
-- The current version is designed to be understandable, runnable, and easy to defend in a course setting.
-- If you want, the next step is to add notebooks, visualizations, and a final report template.
+- **Split:** Leave-one-out (last interaction per user → test)
+- **Ranking:** 1 positive + 99 sampled negatives
+- **Metrics:** HR@K, NDCG@K, MRR@K (K ∈ {5, 10, 20})
+- **Beyond-accuracy:** Catalogue Coverage, Novelty, Gini Coefficient
+
+## Reports and poster (local only)
+
+Practicum PDFs and poster PPT are generated with a **local script** not included in this repository. If you have `generate_report.py` in your private copy, run `python generate_report.py` after `run_experiment.py` to refresh outputs: `results/DATS5990_Report_Licheng_Guo.pdf` (final), `results/DATS5990_Interim_Report_Licheng_Guo.pdf` (Interim Report), and the poster PPTX.

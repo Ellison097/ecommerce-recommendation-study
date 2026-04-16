@@ -1,7 +1,27 @@
-.venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Local-only auxiliary scripts (keep in private workspace; do not publish)
+generate_report.py
+generate_outputs.py
+
+# Optional: large generated artefacts (uncomment if you prefer a lean clone)
+# results/figures/
+# results/metrics/
+
+# Practicum PDFs / slides generated locally
+results/**/*.pdf
+results/**/*.pptx
+
+# IDE / OS
 .DS_Store
-.Rhistory
-data/raw/ml-100k.zip
-results/*.png
+.idea/
+.vscode/
+
+# Local proposal / drafts (optional)
+DATS5990_Proposal*.docx
